@@ -82,12 +82,15 @@ def faceCrop(imagePattern,boxScale=1):
         pil_im=Image.open(img)
         cv_im=pil2cvGrey(pil_im)
         faces=DetectFace(cv_im,faceCascade)
+        if len(faces) != 1:
+            print 'Faces not equal to 1'
+            continue:
         if faces:
             n=1
             for face in faces:
                 croppedImage=imgCrop(pil_im, face[0],boxScale=boxScale)
                 fname,ext=os.path.splitext(img)
-                croppedImage.save(fname+'_crop'+str(n)+ext)
+                croppedImage.save(fname+'_cropped'+ext)
                 n+=1
         else:
             print 'No faces found:', img
