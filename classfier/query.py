@@ -19,14 +19,18 @@ from fetch_data import load_one_image
 # Display progress logs on stdout
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
+pca = ''
+clf = ''
+target_names = ''
+
 def loadModel():
   pca = joblib.load('my_pca.pkl')
   clf = joblib.load('my_model.pkl')
   target_names = joblib.load('target_names.pkl')
-  return pca, clf, target_names
+  #return pca, clf, target_names
 
 def queryModel(img_path=None):
-  pca, clf, target_names = loadModel()
+  #pca, clf, target_names = loadModel()
   if img_path == None:
     img_path = "/home/jasmeet/test.jpg"
   X=load_one_image([img_path], slice_=None, color=False, resize=0.4)
@@ -36,4 +40,5 @@ def queryModel(img_path=None):
   print(str(y_pred))
   print(target_names[y_pred[0]])
 
+loadModel()
 queryModel()
