@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from __future__ import print_function
 
 from time import time
@@ -23,14 +25,15 @@ def loadModel():
   target_names = joblib.load('target_names.pkl')
   return pca, clf, target_names
 
-def queryModel(pca, clf, taget_names, img_path=None):
-  pca, clf, target_names = load_model()
+def queryModel(img_path=None):
+  pca, clf, target_names = loadModel()
   if img_path == None:
-    img_path = "/home/jasmeet/scikit_learn_data/lfw_home/lfw_funneled/Colin_Powell/pic1.jpg" 
-  
-  X=load_one_image([], slice_=None, color=False, resize=0.4)
+    img_path = "/home/jasmeet/test.jpg"
+  X=load_one_image([img_path], slice_=None, color=False, resize=0.4)
   X_pca = pca.transform(X)
   y_pred = clf.predict(X_pca)
 
   print(str(y_pred))
   print(target_names[y_pred[0]])
+
+queryModel()

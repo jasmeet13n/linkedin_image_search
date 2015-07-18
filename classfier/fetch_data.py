@@ -111,7 +111,7 @@ def check_fetch_lfw(data_home=None, funneled=True, download_if_missing=True):
     return lfw_home, data_folder_path
 
 
-def load_one_image(file_paths, slice_, color, resize=0.4):
+def load_one_image(file_paths, slice_, color=False, resize=0.4):
     try:
         try:
             from scipy.misc import imread
@@ -122,8 +122,8 @@ def load_one_image(file_paths, slice_, color, resize=0.4):
         raise ImportError("The Python Imaging Library (PIL)"
                           " is required to load data from jpeg files")
 
-    h = 64
-    w = 64
+    h = 100
+    w = 100
     resize = (h, w)
     print resize
     # allocate some contiguous memory to host the decoded image slices
@@ -183,8 +183,8 @@ def _load_imgs(file_paths, slice_, color, resize):
     #    h = int(resize * h)
     #    w = int(resize * w)
 
-    h = 64
-    w = 64
+    h = 100
+    w = 100
     resize = (h, w)
     # allocate some contiguous memory to host the decoded image slices
     n_faces = len(file_paths)
@@ -198,7 +198,6 @@ def _load_imgs(file_paths, slice_, color, resize):
     for i, file_path in enumerate(file_paths):
         if i % 1000 == 0:
             logger.info("Loading face #%05d / %05d", i + 1, n_faces)
-        print file_path
         face = np.asarray(imread(file_path), dtype=np.float32)
         face /= 255.0  # scale uint8 coded colors to the [0.0, 1.0] floats
         if resize is not None:
@@ -230,7 +229,13 @@ def _fetch_lfw_people(data_folder_path, slice_=None, color=False, resize=None,
         folder_path = join(data_folder_path, person_name)
         if not isdir(folder_path):
             continue
-        paths = [join(folder_path, f) for f in listdir(folder_path)]
+
+        paths = []
+        for f in listdir(folder_path):
+        	if "crop" in f: 
+        		paths += [join(folder_path, f)]
+        	else:
+        		print "no crop found"
         n_pictures = len(paths)
         if n_pictures >= min_faces_per_person:
             person_name = person_name.replace('_', ' ')
