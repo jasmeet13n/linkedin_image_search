@@ -84,7 +84,7 @@ def faceCrop(imagePattern,boxScale=1):
         faces=DetectFace(cv_im,faceCascade)
         if len(faces) != 1:
             print 'Faces not equal to 1'
-            continue:
+            continue
         if faces:
             n=1
             for face in faces:
