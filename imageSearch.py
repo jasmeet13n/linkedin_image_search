@@ -59,7 +59,7 @@ def upload_file():
     #   <p><input type=file name=file>
     #      <input type=submit value=Upload>
     # </form>
-    '''
+    #'''
 @app.route('/show')#change these names
 def show():
     return redirect("https://www.google.com") #redirect to linedin profiel url here
