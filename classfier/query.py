@@ -39,6 +39,7 @@ def queryModel(img_path=None):
 
   print(str(y_pred))
   print(target_names[y_pred[0]])
+  return target_names[y_pred[0]]
 
 loadModel()
 queryModel()
