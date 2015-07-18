@@ -198,6 +198,7 @@ def _load_imgs(file_paths, slice_, color, resize):
     for i, file_path in enumerate(file_paths):
         if i % 1000 == 0:
             logger.info("Loading face #%05d / %05d", i + 1, n_faces)
+        print file_path
         face = np.asarray(imread(file_path), dtype=np.float32)
         face /= 255.0  # scale uint8 coded colors to the [0.0, 1.0] floats
         if resize is not None:
