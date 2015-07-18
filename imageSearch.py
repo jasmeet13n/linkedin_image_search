@@ -20,9 +20,10 @@ def hello():
 @app.route('/down')
 def down():
     link=request.args.get('url')
-    urllib.urlretrieve(link, os.path.basename(link))
-    crop_face.faceCrop(os.path.basename(link))
-    fname,ext = os.path.splitext(os.path.basename(link))
+    link_to_save = link.split('?')[0]
+    urllib.urlretrieve(link, os.path.basename(link_to_save))
+    crop_face.faceCrop(os.path.basename(link_to_save))
+    fname,ext = os.path.splitext(os.path.basename(link_to_save))
     return query.queryModel(fname+'_cropped'+ext)
     #return "Image downloaded"
     
