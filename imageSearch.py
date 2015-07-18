@@ -1,5 +1,7 @@
 import os
 from flask import Flask, request, redirect, url_for, send_from_directory
+from flask_bootstrap import Bootstrap
+from flask import render_template
 from werkzeug import secure_filename
 import urllib
 import uuid
@@ -11,19 +13,23 @@ query.loadModel()
 ALLOWED_EXTENSIONS = set(['JPG', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
+Bootstrap(app)
 #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def hello():
- return 'Welcome'
+ return render_template('index.html')
+ 
+@app.route('/upload_file')
+def upd_file():
+ return render_template('upload.html') 
     
 @app.route('/down')
 def down():
     link=request.args.get('url')
-    link_to_save = link.split('?')[0]
-    urllib.urlretrieve(link, os.path.basename(link_to_save))
-    crop_face.faceCrop(os.path.basename(link_to_save))
-    fname,ext = os.path.splitext(os.path.basename(link_to_save))
+    urllib.urlretrieve(link, os.path.basename(link))
+    crop_face.faceCrop(os.path.basename(link))
+    fname,ext = os.path.splitext(os.path.basename(link))
     return query.queryModel(fname+'_cropped'+ext)
     #return "Image downloaded"
     
@@ -44,14 +50,15 @@ def upload_file():
             return query.queryModel(fname+'_cropped'+ext)
             #return "File uploaded" #redirect(url_for('uploaded_file',
                                     #filename=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
+    return render_template('upload.html')   
+    # return '''
+    # <!doctype html>
+    # <title>Upload new File</title>
+    # <h1>Upload new File</h1>
+    # <form action="" method=post enctype=multipart/form-data>
+    #   <p><input type=file name=file>
+    #      <input type=submit value=Upload>
+    # </form>
     '''
 @app.route('/show')#change these names
 def show():
