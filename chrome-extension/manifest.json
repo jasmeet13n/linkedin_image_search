@@ -15,16 +15,6 @@
   },
   "permissions": [
 	  "notifications", "tabs", "contextMenus", "https://proj-nishantgill.c9.io/uploads"
-	],
-  "commands": {
-          "youtube-notification": {
-            "suggested_key": {
-              "windows": "Ctrl+Shift+Y",
-              "mac": "Command+Shift+Y",
-              "linux": "Ctrl+Shift+Y",
-              "default": "Ctrl+Shift+Y"
-            },
-            "description": "Youtube Notification"
-          }
+	]
   }
 }
